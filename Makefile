@@ -48,22 +48,28 @@ endef
 
 define Package/n2n-edge/install
 	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/edge $(1)/usr/sbin/
-#	$(INSTALL_DIR) $(1)/lib/netifd/proto
-#	$(INSTALL_BIN) ./files/n2n.sh $(1)/lib/netifd/proto
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/edge $(1)/usr/sbin/edge
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/edged.init $(1)/etc/init.d/n2n-edged
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DATA) ./files/edge.config $(1)/etc/config/n2n-edge
 endef
 
-#define Package/n2n-supernode/conffiles
-#/etc/config/n2n
-#endef
+define Package/n2n-edge/conffiles
+	/etc/config/edge
+endef
 
 define Package/n2n-supernode/install
 	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/supernode $(1)/usr/sbin/
-#	$(INSTALL_DIR) $(1)/etc/init.d
-#	$(INSTALL_BIN) ./files/n2n.init $(1)/etc/init.d/n2n
-#	$(INSTALL_DIR) $(1)/etc/config
-#	$(INSTALL_DATA) ./files/n2n.config $(1)/etc/config/n2n
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/supernode $(1)/usr/sbin/supernode
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/supernoded.init $(1)/etc/init.d/n2n-supernoded
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DATA) ./files/supernode.config $(1)/etc/config/n2n-supernode
+endef
+
+define Package/n2n-supernode/conffiles
+	/etc/config/supernode
 endef
 
 $(eval $(call BuildPackage,n2n-edge))
