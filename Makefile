@@ -56,7 +56,7 @@ define Package/n2n-edge/install
 endef
 
 define Package/n2n-edge/conffiles
-	/etc/config/edge
+	/etc/config/n2n-edge
 endef
 
 define Package/n2n-supernode/install
@@ -69,7 +69,7 @@ define Package/n2n-supernode/install
 endef
 
 define Package/n2n-supernode/conffiles
-	/etc/config/supernode
+	/etc/config/n2n-supernode
 endef
 
 $(eval $(call BuildPackage,n2n-edge))
