@@ -6,12 +6,17 @@ NAME=n2n-edge
 PROG=/usr/sbin/edge
 
 start_instance() {
-    local enabled ifname ipaddr supernode community key user group route resolveip
+    local enabled ifname localport localip holepunch macaddr ipaddr netmask supernode community key user group route resolveip
 
     config_get_bool enabled "$1" 'enabled' 0; [ "$enabled" -eq 0 ] && return 1
 
     config_get ifname "$1" 'ifname' "edge-$1"; [ -n "$ifname" ] && append args "-d $ifname"
+    config_get localport "$1" 'localport'; [ -n "$localport" ] && append args "-p $localport"
+    config_get localip "$1" 'localip'; [ -n "$localip" ] && append args "-L $localip"
+    config_get holepunch "$1" 'holepunch'; [ -n "$holepunch" ] && append args "-i $holepunch"
+    config_get macaddr "$1" 'macaddr'; [ -n "$macaddr" ] && append args "-m $macaddr"
     config_get ipaddr "$1" 'ipaddr'; [ -n "$ipaddr" ] && append args "-a $ipaddr"
+    config_get netmask "$1" 'netmask'; [ -n "$netmask" ] && append args "-s $netmask"
     config_get supernode "$1" 'supernode'; [ -n "$supernode" ] && append args "-l $supernode"
     config_get community "$1" 'community'; [ -n "$community" ] && append args "-c $community"
     config_get key "$1" 'key'; [ -n "$key" ] && append args "-k $key"
